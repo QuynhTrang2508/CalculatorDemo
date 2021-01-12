@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">DemoCalculator</string>
+    <string name="label_0">0</string>
+    <string name="label_1">1</string>
+    <string name="label_2">2</string>
+    <string name="label_3">3</string>
+    <string name="label_4">4</string>
+    <string name="label_5">5</string>
+    <string name="label_6">6</string>
+    <string name="label_7">7</string>
+    <string name="label_8">8</string>
+    <string name="label_9">9</string>
+    <string name="label_Dot">.</string>
+    <string name="label_AC">AC</string>
+    <string name="label_C">C</string>
+    <string name="label_percent">%</string>
+    <string name="label_add">+</string>
+    <string name="label_sub">_</string>
+    <string name="label_mul">x</string>
+    <string name="label_div">:</string>
+    <string name="label_equal">=</string>
+    <string name="label_infinite">Vô cực</string>
+    <string name="label_result">Result = </string>
 </resources>
