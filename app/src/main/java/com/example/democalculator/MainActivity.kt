@@ -6,13 +6,13 @@ import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
-    private var operand: String? = null
-    private var operator: String? = null
-    private var numbers: Set<String>? = null
-    private var operators: Set<String>? = null
+    private var operand = ""
+    private var operator = ""
+    private val numbers: HashSet<String> =
+        hashSetOf("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+    private var operators: HashSet<String> = hashSetOf("+", "-", "x", ":")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,86 +21,47 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     @SuppressLint("SetTextI18n")
     override fun onClick(p0: View?) {
-        tvTitle.visibility = View.GONE
+        textTitle.visibility = View.GONE
         val clicked: Button = p0 as Button
         val label: String = clicked.text.toString()
-        val result: String = tvResult.text.toString()
-        if (label == getString(R.string.label_AC)) {
-            tvResult.text = getString(R.string.label_0)
-            operator = null
-            operand = null
-        } else if (isNumeric(label)) {
-            if (isDefaultResult(result) || isOperator(result)) {
-                tvResult.text = label
-            } else {
-                tvResult.text = result + label
+        val result: String = textResult.text.toString()
+        when {
+            label == getString(R.string.title_AC) -> {
+                textResult.text = getString(R.string.title_0)
+                operator = ""
+                operand = ""
             }
-        } else if (isOperator(label)) {
-            operator = label
-            operand = result
-            tvResult.text = label
-        } else if (label == getString(R.string.label_equal)) {
-            tvTitle.visibility = View.VISIBLE
-            val display: Double
-            if (operator == null || operand == null) {
-                return
+            isNumeric(label) -> {
+                if (isDefaultResult(result) || isOperator(result)) textResult.text = label
+                else textResult.text = result + label
             }
-            val input1: Double = operand!!.toDouble()
-            val input2: Double = result.toDouble()
-            display = when (operator) {
-                getString(R.string.label_add) -> {
-                    input1 + input2
-                }
-                getString(R.string.label_sub) -> {
-                    input1 - input2
-                }
-                getString(R.string.label_mul) -> {
-                    input1 * input2
-                }
-                else -> {
-                    input1 / input2
-                }
+            isOperator(label) -> {
+                operator = label
+                operand = result
+                textResult.text = label
             }
-            operand = display.toString()
-            tvResult.text = operand
+            label == getString(R.string.title_equal) -> {
+                textTitle.visibility = View.VISIBLE
+                if (operator == "" || operand == "") {
+                    return
+                }
+                val display: Double = clickEqual(operand.toDouble(), result.toDouble())
+                operand = display.toString()
+                textResult.text = operand
+            }
         }
     }
 
-    private fun initNumbers() {
-        numbers = HashSet()
-        for (i in 0..9) {
-            (numbers as HashSet<String>).add(i.toString())
-        }
-    }
+    private fun isNumeric(value: String): Boolean = numbers.contains(value)
 
-    private fun isNumeric(value: String): Boolean {
-        if (numbers == null) {
-            initNumbers()
-        }
-        return numbers!!.contains(value)
-    }
+    private fun isOperator(value: String): Boolean = operators.contains(value)
 
-    private fun initOperators() {
-        operators = HashSet()
-        val ops = arrayOf(
-            getString(R.string.label_add),
-            getString(R.string.label_sub),
-            getString(R.string.label_mul),
-            getString(R.string.label_div)
-        )
-        for (operator in ops) {
-            (operators as HashSet<String>).add(operator)
-        }
-    }
+    private fun isDefaultResult(value: String): Boolean = value == getString(R.string.title_0)
 
-    private fun isOperator(value: String): Boolean {
-        if (operators == null) {
-            initOperators()
-        }
-        return operators!!.contains(value)
-    }
-
-    private fun isDefaultResult(value: String): Boolean {
-        return value == getString(R.string.label_0)
+    private fun clickEqual(input1: Double, input2: Double) = when (operator) {
+        getString(R.string.title_add) -> input1 + input2
+        getString(R.string.title_sub) -> input1 - input2
+        getString(R.string.title_mul) -> input1 * input2
+        else -> input1 / input2
     }
 }
