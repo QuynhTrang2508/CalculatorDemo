@@ -10,9 +10,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var operand = ""
     private var operator = ""
-    private val numbers: HashSet<String> =
-        hashSetOf("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
-    private var operators: HashSet<String> = hashSetOf("+", "-", "x", ":")
+    private val numbers = hashSetOf("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+    private val operators = hashSetOf("+", "-", "x", ":")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,9 +21,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     @SuppressLint("SetTextI18n")
     override fun onClick(p0: View?) {
         textTitle.visibility = View.GONE
-        val clicked: Button = p0 as Button
-        val label: String = clicked.text.toString()
-        val result: String = textResult.text.toString()
+        val clicked = if (p0 is Button) p0 else return
+        val label = clicked.text.toString()
+        val result = textResult.text.toString()
         when {
             label == getString(R.string.title_AC) -> {
                 textResult.text = getString(R.string.title_0)
@@ -42,7 +41,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
             label == getString(R.string.title_equal) -> {
                 textTitle.visibility = View.VISIBLE
-                if (operator == "" || operand == "") {
+                if (operator.isEmpty() || operand.isEmpty()) {
                     return
                 }
                 val display: Double = clickEqual(operand.toDouble(), result.toDouble())
