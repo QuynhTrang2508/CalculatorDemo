@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">DemoCalculator</string>
+    <string name="title_0">0</string>
+    <string name="title_1">1</string>
+    <string name="title_2">2</string>
+    <string name="title_3">3</string>
+    <string name="title_4">4</string>
+    <string name="title_5">5</string>
+    <string name="title_6">6</string>
+    <string name="title_7">7</string>
+    <string name="title_8">8</string>
+    <string name="title_9">9</string>
+    <string name="title_Dot">.</string>
+    <string name="title_AC">AC</string>
+    <string name="title_C">C</string>
+    <string name="title_percent">%</string>
+    <string name="title_add">+</string>
+    <string name="title_sub">-</string>
+    <string name="title_mul">x</string>
+    <string name="title_div">:</string>
+    <string name="title_equal">=</string>
+    <string name="title_result">Result = </string>
 </resources>
